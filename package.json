@@ -15,5 +15,22 @@
   "bugs": {
     "url": "https://github.com/xj0707/webadmin/issues"
   },
-  "homepage": "https://github.com/xj0707/webadmin#readme"
+  "homepage": "https://github.com/xj0707/webadmin#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "captchapng": "0.0.1",
+    "config": "^3.2.0",
+    "ip2region": "^1.7.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.14",
+    "moment": "^2.24.0",
+    "node-cron": "^2.0.3",
+    "number-precision": "^1.3.1",
+    "redis": "^2.8.0",
+    "tracer": "^0.9.8",
+    "uuid": "^3.3.2"
+  }
 }
