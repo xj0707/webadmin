@@ -14,17 +14,12 @@ const uuid = require('uuid/v4')
 //model类
 const Check = require('./biz/Check')
 const CaptchaModel = require('./model/CaptchaModel')
-const Cache = require('./lib/Cache')
 
 // 登陆
 router.post('/login', async function (ctx, next) {
     //获取参数
     let inparam = ctx.request.body
     let ip = ctx.request.ip
-    const cache = new Cache()
-    let cacheRes = await cache.get(`NA_CAPTCHA_zhangsan`)
-    console.log(cacheRes)
-    console.log(await queryIp(ip))
     //入参校验
     new Check().loginCheck(inparam)
     //逻辑处理

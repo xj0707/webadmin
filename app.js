@@ -7,6 +7,9 @@ const koaBody = require('koa-body')     //入参json解析中间件
 const testRoute = require('./src/api_test')
 const loginRoute = require('./src/api_login')
 
+//定时服务
+require('./src/api_cron')
+
 // 初始化服务与加载中间件
 const app = new koa()
 // 全局捕获错误中间件

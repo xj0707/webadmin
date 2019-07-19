@@ -1,0 +1,35 @@
+{
+    "auth": {
+        "secret": "gsy0913",
+        "tokenname": "authorization",
+        "pass": [
+            "/ping",
+            "/captcha",
+            "/auth"
+        ],
+        "role": {
+            "1": [
+                ".*"
+            ],
+            "10": [
+                ".*"
+            ],
+            "100": [
+                ".*"
+            ],
+            "1000": [
+                ".*"
+            ],
+            "player": [
+                "/game/*"
+            ],
+            "financialStaff": [
+                "GET:/financial/test1",
+                "POST:/financial/test2"
+            ]
+        },
+        "cors": true,
+        "errMsg": "未认证",
+        "errStatus": 200
+    }
+}
