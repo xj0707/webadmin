@@ -1,4 +1,8 @@
 {
+    "mongodb": {
+        "url": "mongodb://localhost:27017",
+        "dbName": "myproject"
+    },
     "sys": {
         "port": 5000
     },
@@ -16,7 +20,7 @@
                 ".*"
             ],
             "10": [
-                ".*"
+                "/admin/+"
             ],
             "player": [
                 "/game/*"

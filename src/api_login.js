@@ -24,7 +24,7 @@ router.post('/login', async function (ctx, next) {
     //入参校验
     new Check().loginCheck(inparam)
     //逻辑处理
-    let data = { username: 'xj', role: '10' }
+    let data = { username: 'xj', role: '1' }
     //生成token
     let token = jwt.sign({
         ...data,

@@ -7,6 +7,7 @@ const koaBody = require('koa-body')     //入参json解析中间件
 // 路由控制器
 const testRoute = require('./src/api_test')
 const loginRoute = require('./src/api_login')
+const adminRoute = require('./src/api_admin')
 
 //定时服务
 require('./src/api_cron')
@@ -94,6 +95,7 @@ app.use(async (ctx, next) => {
 
 app.use(testRoute.routes())                 //测试接口
 app.use(loginRoute.routes())                //登陆接口
+app.use(adminRoute.routes())                //个人中心
 
 app.use(function (ctx, next) {
     ctx.status = 404
