@@ -1,23 +1,21 @@
 {
+    "sys": {
+        "port": 5000
+    },
     "auth": {
-        "secret": "gsy0913",
+        "secret": "xxjun",
         "tokenname": "authorization",
         "pass": [
-            "/ping",
-            "/captcha",
-            "/auth"
+            "/postData",
+            "/ping/*",
+            "/login",
+            "/captcha"
         ],
         "role": {
             "1": [
                 ".*"
             ],
             "10": [
-                ".*"
-            ],
-            "100": [
-                ".*"
-            ],
-            "1000": [
                 ".*"
             ],
             "player": [

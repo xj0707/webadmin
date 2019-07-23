@@ -18,6 +18,10 @@ class Util {
         for (let item of checkArr) {
             let name = item.name
             let type = item.type
+            if (!inparam[name]) {
+                errorArr.push(name)
+                continue
+            }
             switch (type) {
                 case 'Reg':  //正则检验
                     if (!item.equal.test(inparam[name])) errorArr.push(name)

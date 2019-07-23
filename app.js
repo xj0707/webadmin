@@ -1,5 +1,6 @@
-const PORT = 5000
+const config = require('config')
 const moment = require('moment')
+const jwt = require('jsonwebtoken')
 // 应用服务与中间件
 const koa = require('koa')
 const koaBody = require('koa-body')     //入参json解析中间件
@@ -19,7 +20,12 @@ app.use(async function (ctx, next) {
     } catch (error) {
         console.log(error)
         ctx.status = 200
-        ctx.body = { code: -1, msg: '内部系统异常' }
+        if (!error.code) {
+            ctx.body = { code: -1, msg: error.message }
+        } else {
+            ctx.body = { ...error }
+        }
+
     }
 })
 app.use(koaBody())
@@ -42,6 +48,50 @@ app.use(async (ctx, next) => {
     }
     await next()
 })
+// 权限控制
+app.use(async (ctx, next) => {
+    // 是否放行跨域OPTIONS请求
+    if (config.auth.cors && ctx.method == 'OPTIONS') {
+        return next()
+    }
+    // 白名单直接返回
+    if (config.auth.pass.length) {
+        for (let item of config.auth.pass) {
+            if (new RegExp(item).test(ctx.url)) return next()
+        }
+    }
+    // 获取token
+    let token = ctx.header[config.auth.tokenname] || ctx.header.token
+    try {
+        const tokenVerify = jwt.verify(token, config.auth.secret)
+        if (tokenVerify) {
+            let roleArr = config.auth.role[tokenVerify.role]
+            for (let item of roleArr) {
+                if (item.indexOf(':') != '-1') {
+                    if (item.split(':')[0] != ctx.method) {
+                        continue
+                    }
+                    item = item.split(':')[1]
+                }
+                if (new RegExp(item).test(ctx.url)) {
+                    ctx.tokenVerify = tokenVerify
+                    return next()
+                }
+            }
+            ctx.status = 200
+            ctx.body = { code: -1, msg: '权限不足！' }
+        } else {
+            ctx.status = 200
+            ctx.body = { code: -1, msg: '未知token' }
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.status = 200
+        ctx.body = { code: -1, msg: error.message }
+    }
+})
+
+
 app.use(testRoute.routes())                 //测试接口
 app.use(loginRoute.routes())                //登陆接口
 
@@ -50,5 +100,6 @@ app.use(function (ctx, next) {
     ctx.body = { code: 404, msg: 'not found' }
 })
 // 监听端口
+const PORT = config.sys.port
 app.listen(PORT)
 console.log(`服务器监听端口：${PORT}`)
